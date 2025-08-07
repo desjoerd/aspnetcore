@@ -19,6 +19,8 @@ public static class XmlEndpointExtensions
 
         group.MapPost("/todo-with-description", (TodoWithDescription todo) => { });
 
+        group.MapGet("/list", () => TypedResults.Ok(new TodoList()));
+
         return endpointRouteBuilder;
     }
 
@@ -110,5 +112,26 @@ public static class XmlEndpointExtensions
         /// </summary>
         /// <value>Another description of the todo.</value>
         public required string Description { get; set; }
+    }
+
+    /// <summary>
+    /// TodoList to show references.
+    /// </summary>
+    public class TodoList
+    {
+        /// <summary>
+        /// A description of the list of Todo Items.
+        /// </summary>
+        public List<TodoWithDescription> Items { get; set; } = [];
+
+        /// <summary>
+        /// Last completed Todo.
+        /// </summary>
+        public TodoWithDescription LastCompleted { get; set; } = null!;
+
+        /// <summary>
+        /// First completed Todo.
+        /// </summary>
+        public TodoWithDescription FirstCompleted { get; set; } = null!;
     }
 }
