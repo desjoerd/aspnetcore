@@ -39,6 +39,7 @@ public static class SchemasEndpointsExtensions
         schemas.MapPost("/child", (ChildObject child) => Results.Ok(child));
         schemas.MapPatch("/json-patch", (JsonPatchDocument patchDoc) => Results.NoContent());
         schemas.MapPatch("/json-patch-generic", (JsonPatchDocument<ParentObject> patchDoc) => Results.NoContent());
+        schemas.MapPost("/descriptions", ([Description("Described Parameter")] DescribedDto describedDto) => Results.NoContent());
 
         return endpointRouteBuilder;
     }
@@ -100,5 +101,18 @@ public static class SchemasEndpointsExtensions
     {
         public int Id { get; set; }
         public required ParentObject Parent { get; set; }
+    }
+
+    [Description("Type Description")]
+    public sealed class DescribedDto
+    {
+        [Description("Property Description on string")]
+        public string DescribedString { get; set; }
+
+        [Description("Property Description on Referenced Object")]
+        public Tag ReferencedTag { get; set; }
+
+        [Description("Property Description on Second Referenced Object")]
+        public Tag SecondReferencedTag { get; set; }
     }
 }
