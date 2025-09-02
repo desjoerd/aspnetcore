@@ -36,6 +36,7 @@ builder.Services.AddOpenApi("v2", options =>
     });
 });
 builder.Services.AddOpenApi("controllers");
+builder.Services.AddOpenApi("deprecated");
 builder.Services.AddOpenApi("responses");
 builder.Services.AddOpenApi("forms");
 builder.Services.AddOpenApi("schemas-by-ref");
@@ -59,6 +60,7 @@ if (app.Environment.IsDevelopment())
     app.MapSwaggerUi();
 }
 
+app.MapObsoleteEndpoints();
 app.MapFormEndpoints();
 app.MapV1Endpoints();
 app.MapV2Endpoints();

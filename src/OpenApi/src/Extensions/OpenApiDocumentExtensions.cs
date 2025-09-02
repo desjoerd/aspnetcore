@@ -26,16 +26,19 @@ internal static class OpenApiDocumentExtensions
 
         object? description = null;
         object? example = null;
+        object? deprecated = null;
         if (schema is OpenApiSchema actualSchema)
         {
             actualSchema.Metadata?.TryGetValue(OpenApiConstants.RefDescriptionAnnotation, out description);
             actualSchema.Metadata?.TryGetValue(OpenApiConstants.RefExampleAnnotation, out example);
+            actualSchema.Metadata?.TryGetValue(OpenApiConstants.RefDeprecatedAnnotation, out deprecated);
         }
 
         return new OpenApiSchemaReference(schemaId, document)
         {
             Description = description as string,
             Examples = example is JsonNode exampleJson ? [exampleJson] : null,
+            Deprecated = deprecated is bool isDeprecated && isDeprecated,
         };
     }
 }
